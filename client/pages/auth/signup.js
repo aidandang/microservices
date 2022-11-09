@@ -1,13 +1,29 @@
 import { useState } from 'react';
+import useRequest from '../../hooks/use-request';
+import { SubmissionError } from '../../hooks/use-request';
 
 export default () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const { doRequest, errors } = useRequest({
+		url: '/api/users/signup',
+		method: 'post',
+		body: {
+			email,
+			password,
+		},
+	});
+
+	const onSubmit = async (event) => {
+		event.preventDefault();
+
+		doRequest();
+	};
 
 	return (
 		<div>
 			<h1 className='text-2xl font-semibold'>Sign Up</h1>
-			<form>
+			<form onSubmit={onSubmit}>
 				<div>
 					<label
 						htmlFor='email'
@@ -17,7 +33,7 @@ export default () => {
 					</label>
 					<div className='mt-1'>
 						<input
-							type='email'
+							type='text'
 							name='email'
 							value={email}
 							onChange={(e) => {
@@ -48,9 +64,10 @@ export default () => {
 						/>
 					</div>
 				</div>
+				<div>{<SubmissionError err={errors} />}</div>
 				<div>
 					<button
-						type='button'
+						type='submit'
 						className='inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
 					>
 						Sign up
