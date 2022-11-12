@@ -1,80 +1,99 @@
 import { useState } from 'react';
 import Router from 'next/router';
+
 import useRequest from '../../hooks/use-request';
-import { SubmissionError } from '../../hooks/use-request';
+import AuthLayout, {
+	Text,
+	Button,
+	SubmissionError,
+} from '../../components/auth';
+
+const subtitle = {
+	href: '/auth/signup',
+	label: 'sign up for a new account',
+};
 
 export default () => {
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
+	const [formState, setFormState] = useState({
+		email: '',
+		password: '',
+	});
+
 	const { doRequest, errors } = useRequest({
 		url: '/api/users/signin',
 		method: 'post',
 		body: {
-			email,
-			password,
+			email: formState.email,
+			password: formState.password,
 		},
 		onSuccess: () => Router.push('/'),
 	});
 
+	const onChange = (e) => {
+		e.preventDefault();
+
+		setFormState((prevState) => ({
+			...prevState,
+			[e.target.name]: e.target.value,
+		}));
+	};
+
 	const onSubmit = async (event) => {
 		event.preventDefault();
+
 		await doRequest();
 	};
 
 	return (
-		<div>
-			<h1 className='text-2xl font-semibold'>Sign In</h1>
-			<form onSubmit={onSubmit}>
-				<div>
-					<label
-						htmlFor='email'
-						className='block text-sm font-medium text-gray-700'
-					>
-						Email
-					</label>
-					<div className='mt-1'>
+		<AuthLayout title={'Sign in to your account'} subtitle={subtitle}>
+			<form className='space-y-6' onSubmit={onSubmit}>
+				<Text
+					label='Email address'
+					name='email'
+					type='email'
+					autoComplete='new-password'
+					required={true}
+					onChange={onChange}
+				/>
+				<Text
+					label='Password'
+					name='password'
+					type='password'
+					autoComplete='new-password'
+					required={true}
+					onChange={onChange}
+				/>
+
+				<div className='flex items-center justify-between'>
+					<div className='flex items-center'>
 						<input
-							type='text'
-							name='email'
-							value={email}
-							onChange={(e) => {
-								e.preventDefault();
-								setEmail(e.target.value);
-							}}
-							className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+							id='remember-me'
+							name='remember-me'
+							type='checkbox'
+							className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
 						/>
+						<label
+							htmlFor='remember-me'
+							className='ml-2 block text-sm text-gray-900'
+						>
+							Remember me
+						</label>
+					</div>
+
+					<div className='text-sm'>
+						<a
+							href='#'
+							className='font-medium text-indigo-600 hover:text-indigo-500'
+						>
+							Forgot your password?
+						</a>
 					</div>
 				</div>
-				<div>
-					<label
-						htmlFor='email'
-						className='block text-sm font-medium text-gray-700'
-					>
-						Password
-					</label>
-					<div className='mt-1'>
-						<input
-							type='password'
-							name='password'
-							value={password}
-							onChange={(e) => {
-								e.preventDefault();
-								setPassword(e.target.value);
-							}}
-							className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
-						/>
-					</div>
-				</div>
-				<div>{errors && <SubmissionError err={errors} />}</div>
-				<div>
-					<button
-						type='submit'
-						className='inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
-					>
-						Sign in
-					</button>
-				</div>
+
+				{errors && <SubmissionError err={errors} />}
+
+				<Button type='submit'>Sign in</Button>
 			</form>
-		</div>
+		</AuthLayout>
 	);
 };
