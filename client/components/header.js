@@ -114,7 +114,7 @@ export default function Header() {
 											<Menu.Item>
 												{({ active }) => (
 													<a
-														href='#'
+														href='/auth/signout'
 														className={classNames(
 															active ? 'bg-gray-100' : '',
 															'block px-4 py-2 text-sm text-gray-700'
@@ -216,7 +216,7 @@ export default function Header() {
 								</Disclosure.Button>
 								<Disclosure.Button
 									as='a'
-									href='#'
+									href='/auth/signout'
 									className='block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800'
 								>
 									Sign out
