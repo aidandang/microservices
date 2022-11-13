@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: client
-          image: aidandang/client
+          image: aidandang/ticketing-client
 ---
 apiVersion: v1
 kind: Service

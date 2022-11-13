@@ -12,7 +12,6 @@ export default ({ url, method, body, onSuccess }) => {
 			}
 			return response.data;
 		} catch (err) {
-			console.log(err);
 			setErrors(err.response.data.errors);
 		}
 	};
