@@ -31,7 +31,7 @@ router.post(
 			throw new NotFoundError();
 		}
 
-		res.send({});
+		res.send({ message: 'hello' });
 	}
 );
 
