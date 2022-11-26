@@ -8,7 +8,7 @@ import {
 	NotFoundError,
 } from '@aidansworkspace/common';
 
-import { createOrderRouter } from './routes/new';
+import { newOrderRouter } from './routes/new';
 import { showOrderRouter } from './routes/show';
 import { indexOrderRouter } from './routes';
 import { deleteOrderRouter } from './routes/delete';
@@ -25,7 +25,7 @@ app.use(
 
 app.use(currentUser);
 
-app.use(createOrderRouter);
+app.use(newOrderRouter);
 app.use(showOrderRouter);
 app.use(indexOrderRouter);
 app.use(deleteOrderRouter);
