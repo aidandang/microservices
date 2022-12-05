@@ -23,5 +23,6 @@ export class TicketUpdatedListener extends Listener<TicketUpdatedEvent> {
 		await ticket.save();
 
 		msg.ack();
+		// testing
 	}
 }
