@@ -12,7 +12,7 @@ export class TicketUpdatedListener extends Listener<TicketUpdatedEvent> {
 	queueGroupName = queueGroupName;
 
 	async onMessage(data: TicketUpdatedEvent['data'], msg: Message) {
-		const ticket = await Ticket;
+		const ticket = await Ticket.findByEvent(data);
 
 		if (!ticket) {
 			throw new Error('Ticket not found');
@@ -23,6 +23,5 @@ export class TicketUpdatedListener extends Listener<TicketUpdatedEvent> {
 		await ticket.save();
 
 		msg.ack();
-		// testing
 	}
 }
