@@ -8,6 +8,7 @@ import { ExpirationCompletedListener } from './events/listeners/expiration-compl
 mongoose.set('strictQuery', true);
 
 const start = async () => {
+	console.log('h');
 	if (!process.env.JWT_KEY) {
 		throw new Error('JWT_KEY must be defined');
 	}
