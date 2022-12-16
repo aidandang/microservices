@@ -55,8 +55,6 @@ orderSchema.statics.build = (attrs: OrderAttrs) => {
 	});
 };
 
-console.log('helloccc');
-
 const Order = mongoose.model<OrderDoc, OrderModel>('Order', orderSchema);
 
 export { Order };

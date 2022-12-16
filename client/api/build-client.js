@@ -4,8 +4,7 @@ export default ({ req }) => {
 	if (typeof window === 'undefined') {
 		// we are on the sever
 		return axios.create({
-			baseURL:
-				'http://ingress-nginx-controller.ingress-nginx.svc.cluster.local',
+			baseURL: 'http://www.g7shipping.com',
 			headers: req.headers,
 		});
 	} else {
@@ -15,3 +14,5 @@ export default ({ req }) => {
 		});
 	}
 };
+
+// http://ingress-nginx-controller.ingress-nginx.svc.cluster.local
